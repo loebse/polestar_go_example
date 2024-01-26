@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	baseURL      = "https://polestarid.eu.polestar.com" // Update this line
+	baseURL      = "https://polestarid.eu.polestar.com"
 	authEndpoint = "/as/authorization.oauth2"
 	callbackURL  = "https://www.polestar.com/sign-in-callback"
 )
@@ -32,7 +32,7 @@ func NewPolestarAuth(username, password string, client *http.Client) *PolestarAu
 	return &PolestarAuth{
 		Username: username,
 		Password: password,
-		Client:   client, // Use the provided client
+		Client:   client,
 	}
 }
 
@@ -112,6 +112,7 @@ func (p *PolestarAuth) GetToken(refresh bool) error {
 	return nil
 }
 
+// NOT FOLLOW REDIRECT //
 func (p *PolestarAuth) getCode(resumePath string) (string, error) {
 	// Step 1: Perform a POST request to obtain the initial redirect URL
 	postURL := baseURL + fmt.Sprintf("/as/%s/resume/as/authorization.ping", resumePath)
@@ -163,6 +164,7 @@ func (p *PolestarAuth) getCode(resumePath string) (string, error) {
 	return code, nil
 }
 
+//  THIS WILL FOLLOW REDIRECT //
 // func (p *PolestarAuth) getCode(resumePath string) (string, error) {
 // 	// Step 1: Perform a POST request to obtain the initial redirect URL
 // 	postURL := baseURL + fmt.Sprintf("/as/%s/resume/as/authorization.ping", resumePath)
